@@ -14,8 +14,18 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(logger('dev'))
 
-app.get('*', (req, res) => res.status(200).send({
-    message: 'Welcome to the beginning of nothingness.',
+app.get('/', (req, res) => res.status(200).send({
+    status:"success",
 }));
+
+var data ;
+app.post('/data', (req,res) => {
+    data = req.body;
+    res.json(data);
+})
+
+app.get('/data', (req,res) => {
+    res.send(data);
+})
 
 module.exports = app
