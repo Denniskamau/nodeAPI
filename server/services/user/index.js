@@ -1,14 +1,14 @@
 const express = require('express')
 const passport = require('passport');
+const userController = require('../../controllers').singUp
 
 
 const router = express.Router()
-router.post('/signup', passport.authenticate('local-signup',{
-
-    successRedirect: '/',
-    failureRedirect:'/user/signup'
-}))
-// login route
-//router.post('/login', (req,res) => auth.userLogIn(req,res));
+// process the signup form
+router.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/', // redirect to the secure profile section
+    failureRedirect: '/signup', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+}));
 
 module.exports = router;
