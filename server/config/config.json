@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "123456seven",
-    "database": "server-monitor",
+    "database": "serverMonitor",
     "host": "127.0.0.1",
     "port":5432,
     "dialect": "postgres"

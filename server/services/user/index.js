@@ -1,11 +1,14 @@
 const express = require('express')
-const auth = require('../../controllers').singUp
+const passport = require('passport');
 
 
 const router = express.Router()
-//sign up route
-router.post('/signup', (req,res)=> auth.userSignUp(req,res));
+router.post('/signup', passport.authenticate('local-signup',{
+
+    successRedirect: '/',
+    failureRedirect:'/user/signup'
+}))
 // login route
-router.post('/login', (req,res) => auth.userLogIn(req,res));
+//router.post('/login', (req,res) => auth.userLogIn(req,res));
 
 module.exports = router;
