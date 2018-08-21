@@ -7,3 +7,5 @@ const router = express.Router()
 router.post('/signup', (req,res)=> auth.userSignUp(req,res));
 // login route
 router.post('/login', (req,res) => auth.userLogIn(req,res));
+
+module.exports = router;

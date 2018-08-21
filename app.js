@@ -1,9 +1,8 @@
 const express = require('express')
-//const path = require('path')
 const logger = require ('morgan')
 const bodyParser = require('body-parser')
 
-//const Routes = require('./recources/routes')
+
 
 const app = express()
 
@@ -34,5 +33,5 @@ app.get('/data', (req, res) => {
 })
 
 // signup route
-app.use('/user/signup', routes.singup);
+app.use('/user/', routes.singup);
 module.exports = app
