@@ -5,6 +5,8 @@ const passport = require('passport')
 const session = require('express-session')
 const flash = require('connect-flash')
 const cookieParser = require('cookie-parser');
+const config = require('./server/config/config')
+
 
 const app = express()
 
@@ -28,7 +30,7 @@ app.use(logger('dev'))
 
 //passport
 app.use(session({
-        secret: 'hackerbayUniversity',
+        secret: config.secret,
         resave: true,
         saveUninitialized: true
     })); // session secret
