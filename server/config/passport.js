@@ -40,7 +40,7 @@ module.exports = function (passport, user) {
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
             }
 
-   
+
             
             process.nextTick(function () {
                 
@@ -63,25 +63,15 @@ module.exports = function (passport, user) {
                             email:email,
                             password:userPassword
                         }
-                        console.log("data is "+JSON.stringify(data))
                         User.create(data).then((newUser,created)=>{
                             if(!newUser){
                                 return done(null,false)
                             }
                             if(newUser){
-                                console.log("new user"+ JSON.stringify(newUser))
                                 var token = jwt.sign({id:newUser.id},'server secret');
-                                console.log("token is "+ token)
                                 return done(null,false,req.flash('session',token))
                             }
                         });
-                        
-                        // save the user
-                        // newUser.save(function (err) {
-                        //     if (err)
-                        //         throw err;
-                        //     return done(null, newUser);
-                        // });
                     }else {
                         return done(null, false, req.flash('error', 'user already exists'))
                     }
@@ -103,19 +93,26 @@ module.exports = function (passport, user) {
         },
         (req,email,password,done)=>{
             // find a user with the email provided
-            User.findOne({where: {email: email}}, (err,user)=>{
-                if(err)
-                    return done(err);
-                // if no user is found
-                if(!user){
-                    return done(null, false,req.flash('message','no user found'));
+            User.findOne({
+                where: {
+                    email: email
                 }
-                // if user is found but the password is wrong
-                if(!user.validPassword(password))
-                    return done(null,false,req.flash('message','invalid password'))
-                
-                return done(null,user);
-            });
+            }).then(function(user){
+            // if there are any errors, return the error before anything else
+            // if no user is found, return the message
+            if (!user)
+                return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+
+            // if the user is found but the password is wrong
+            var isValidPassword = function(userpass,password){
+                return bCrypt.compareSync(password, userpass);
+            }
+            if (isValidPassword(user.password,password))
+                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+
+            // all is well, return successful user
+            return done(null, user);
+            })
         } ));
 
 };
