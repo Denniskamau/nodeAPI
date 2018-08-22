@@ -6,14 +6,14 @@ const jwt = require('jsonwebtoken');
 
 
 
-module.exports = function (passport, user) { 
-    passport.serializeUser(function (user, done) {
+module.exports = (passport, user)=> { 
+    passport.serializeUser((user, done)=> {
         done(null, user.id);
     });
 
 // used to deserialize the user
-    passport.deserializeUser(function (id, done) {
-        User.findById(id).then(function (user) {
+    passport.deserializeUser((id, done)=> {
+        User.findById(id).then((user)=> {
             if (user) {
                 done(null, user.get());
             } else {
@@ -31,18 +31,18 @@ module.exports = function (passport, user) {
             passwordField: 'password',
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
-        function (req, email, password, done) {
+        (req, email, password, done)=> {
 
             // asynchronous
             // User.findOne wont fire unless data is sent back
 
-            var generateHash = function(password){
+            var generateHash = (password)=>{
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
             }
 
 
             
-            process.nextTick(function () {
+            process.nextTick(()=> {
                 
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
@@ -68,7 +68,7 @@ module.exports = function (passport, user) {
                                 return done(null,false)
                             }
                             if(newUser){
-                                var token = jwt.sign({id:newUser.id},'server secret');
+                                let token = jwt.sign({id:newUser.id},'server secret');
                                 return done(null,false,req.flash('session',token))
                             }
                         });
@@ -97,21 +97,26 @@ module.exports = function (passport, user) {
                 where: {
                     email: email
                 }
-            }).then(function(user){
+            }).then((user)=>{
             // if there are any errors, return the error before anything else
             // if no user is found, return the message
             if (!user)
-                return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                return done(null, false, req.flash('error', 'User does not exist')); // req.flash is the way to set flashdata using connect-flash
 
             // if the user is found but the password is wrong
-            var isValidPassword = function(userpass,password){
+            let isValidPassword = (userpass,password)=>{
                 return bCrypt.compareSync(password, userpass);
             }
             if (isValidPassword(user.password,password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                return done(null, false, req.flash('error', 'Invalid Password')); // create the loginMessage and save it to session as flashdata
 
             // all is well, return successful user
-            return done(null, user);
+            let token = jwt.sign({id:user.id},'server secret');
+
+            return done(null, false,req.flash('sesion',token));
+            }).catch((err)=>{
+                console.log("Error:",err)
+                return done(null, false, {message: 'Something went wrong with your Signin'});
             })
         } ));
 
