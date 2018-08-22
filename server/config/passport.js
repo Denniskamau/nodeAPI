@@ -101,6 +101,21 @@ module.exports = function (passport, user) {
             passwordField: 'password',
             passReqToCallback:true
         },
-    ))
+        (req,email,password,done)=>{
+            // find a user with the email provided
+            User.findOne({where: {email: email}}, (err,user)=>{
+                if(err)
+                    return done(err);
+                // if no user is found
+                if(!user){
+                    return done(null, false,req.flash('message','no user found'));
+                }
+                // if user is found but the password is wrong
+                if(!user.validPassword(password))
+                    return done(null,false,req.flash('message','invalid password'))
+                
+                return done(null,user);
+            });
+        } ));
 
 };
