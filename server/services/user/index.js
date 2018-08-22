@@ -11,7 +11,6 @@ router.post('/signup', (req,res)=>{
     passport.authenticate('local-signup', (err,user)=>{
         if (user){
             if(user.error){
-                console.log('user has error')
                 res.status(400).json(user)
             }
             const token = jwt.sign({id:user.id}, config.secret);
@@ -23,9 +22,7 @@ router.post('/signup', (req,res)=>{
 router.post('/login', (req, res) => {
     passport.authenticate('local-login',(err,user)=>{
         if(user){
-            console.log("Test invalid password"+JSON.stringify(user));
             if (user.error){
-                console.log('user test ' + JSON.stringify(user))
                 res.status(400).json(user)
             }
             const token = jwt.sign({id:user.id}, config.secret);
