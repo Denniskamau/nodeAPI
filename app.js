@@ -3,6 +3,8 @@ const logger = require ('morgan')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const session = require('express-session')
+const flash = require('connect-flash')
+const cookieParser = require('cookie-parser');
 
 const app = express()
 
@@ -18,6 +20,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+app.use(cookieParser())
 
 //logger
 app.use(logger('dev'))
@@ -25,12 +28,13 @@ app.use(logger('dev'))
 
 //passport
 app.use(session({
-        secret: 'keyboard cat',
+        secret: 'hackerbayUniversity',
         resave: true,
         saveUninitialized: true
     })); // session secret
 app.use(passport.initialize());
 app.use(passport.session())
+app.use(flash())
 
 
 

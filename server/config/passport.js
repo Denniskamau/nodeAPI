@@ -2,20 +2,11 @@ const User = require('../models').User
 const LocalStrategy = require('passport-local').Strategy
 const passport = require('passport')
 var bCrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
 
 
 
-
-module.exports = function (passport, user) {
-    //var User =user
-    // =========================================================================
-    // passport session setup ==================================================
-    // =========================================================================
-    // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
-
-    // used to serialize the user for the session
-    
+module.exports = function (passport, user) { 
     passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
@@ -32,13 +23,9 @@ module.exports = function (passport, user) {
 
     });
 
-    // =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
 
     passport.use('local-signup', new LocalStrategy({
+            
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
             passwordField: 'password',
@@ -52,27 +39,23 @@ module.exports = function (passport, user) {
             var generateHash = function(password){
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
             }
-            console.log("before"+email)
+
+   
+            
             process.nextTick(function () {
-                console.log("after"+ email)
+                
                 // find a user whose email is the same as the forms email
                 // we are checking to see if the user trying to login already exists
 
+               
                 User.findOne({
                     where: {
                       email:email
                     }
-                }).then((err,user)=> {
-                    if(err){
-                        console.log("error" + err)
-                        return done(JSON.stringify(err));
+                }).then(function(user) {
+                    if(!user) {
                         
-                    }
-                    if(user) {
-                        console.log("user with "+email+ " exist")
-                        return done(null, false, {message:'That email is already taken'});
-                    }else {
-                                                // if there is no user with that email
+                        // if there is no user with that email
                         // create the user
                         let userPassword = generateHash(password);
                         const data =
@@ -80,21 +63,27 @@ module.exports = function (passport, user) {
                             email:email,
                             password:userPassword
                         }
+                        console.log("data is "+JSON.stringify(data))
                         User.create(data).then((newUser,created)=>{
                             if(!newUser){
                                 return done(null,false)
                             }
                             if(newUser){
-                                return done(null,newUser)
+                                console.log("new user"+ JSON.stringify(newUser))
+                                var token = jwt.sign({id:newUser.id},'server secret');
+                                console.log("token is "+ token)
+                                return done(null,false,req.flash('session',token))
                             }
                         });
-                        console.log("new user is "+newUser)
+                        
                         // save the user
-                        newUser.save(function (err) {
-                            if (err)
-                                throw err;
-                            return done(null, newUser);
-                        });
+                        // newUser.save(function (err) {
+                        //     if (err)
+                        //         throw err;
+                        //     return done(null, newUser);
+                        // });
+                    }else {
+                        return done(null, false, req.flash('error', 'user already exists'))
                     }
                 })
 
