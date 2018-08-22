@@ -2,4 +2,4 @@
 
 ./server/config/config.json
 
-/server/config/config.js
+./server/config
