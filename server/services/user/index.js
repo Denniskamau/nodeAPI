@@ -14,8 +14,15 @@ router.post('/signup', passport.authenticate('local-signup', {
 
 router.get('/signup', (req, res) => {
      //var token = jwt.sign({id: newUser.id }, 'server secret');
-   // res.json(200,{token:token});
+    //res.json(200,{token:token});
     
 })
+//login route
+router.post('/login', passport.authenticate('local-login',{
+    successFlash:true,
+    failureRedirect:'/data',
+    successRedirect:'/user/signup'
+}))
+
 
 module.exports = router;

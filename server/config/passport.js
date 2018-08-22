@@ -94,4 +94,13 @@ module.exports = function (passport, user) {
 
         }));
 
+
+        //login stategy
+        passport.use('local-login', new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback:true
+        },
+    ))
+
 };
