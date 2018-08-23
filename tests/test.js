@@ -18,3 +18,18 @@ describe('/GET', ()=>{
         });
     });
 });
+
+describe('/POST data', ()=>{
+    it('it should post data ', (done)=>{
+        let data = {"data":"Any string"}
+        chai.request(app)
+        .post('/data')
+        .send(data)
+        .end((err,res)=>{
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('data').eql("Any string");
+            done();
+        });
+    });
+});
