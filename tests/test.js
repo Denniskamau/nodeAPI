@@ -33,3 +33,16 @@ describe('/POST data', ()=>{
         });
     });
 });
+
+
+describe('/GET data', ()=>{
+    it('it should get data object', (done)=>{
+        chai.request(app)
+        .get('/data')
+        .end((err,res)=>{
+            res.should.have.status(200);
+            res.should.be.json;
+            done();
+        });
+    });
+});
