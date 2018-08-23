@@ -11,10 +11,10 @@ describe('/GET', ()=>{
         chai.request(app)
         .get('/')
         .end((err,res)=>{
-            res.status.have.status(200)
-            res.body.should.be.a('object')
+            res.should.have.status(200)
+            res.should.be.json;
             res.body.should.have.property('status')
-        done();
+            done();
         });
     });
 });
