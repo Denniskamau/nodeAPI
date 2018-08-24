@@ -67,6 +67,7 @@ module.exports = (passport, user)=> {
                                 return done(null,false)
                             }
                             if(newUser){
+                                console.log('hit')
                                 return done(null,newUser);
                             }
                         });
