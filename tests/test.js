@@ -21,10 +21,10 @@ describe('/GET', ()=>{
 
 describe('/POST data', ()=>{
     it('it should post data ', (done)=>{
-        let data = {"data":"Any string"}
+        let dataString = {"data":"Any string"}
         chai.request(app)
         .post('/data')
-        .send(data)
+        .send(dataString)
         .end((err,res)=>{
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -34,6 +34,33 @@ describe('/POST data', ()=>{
     });
 });
 
+describe('/POST data', ()=>{
+    it('it should return 400 status for integer ', (done)=>{
+        let dataInt = { "data": 3 }
+        chai.request(app)
+        .post('/data')
+        .send(dataInt)
+        .end((err,res)=>{
+            res.should.have.status(400);
+            res.body.should.have.property('error');
+            done();
+        });
+    });
+})
+
+describe('/POST data', () => {
+    it('it should return 400 status for empty data ', (done) => {
+        let dataInt = {"data": ""}
+        chai.request(app)
+            .post('/data')
+            .send(dataInt)
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.should.have.property('error');
+                done();
+            });
+    });
+})
 
 describe('/GET data', ()=>{
     it('it should get data object', (done)=>{

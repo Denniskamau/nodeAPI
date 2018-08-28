@@ -46,8 +46,23 @@ app.get('/', (req, res) => res.status(200).send({
 
 var data;
 app.post('/data', (req, res) => {
-    data = req.body;
-    res.json(data);
+    console.log(JSON.stringify(typeof req.body.data))
+    console.log('lenght is', req.body.data.length)
+    if(typeof req.body.data=== "string"){
+        if(req.body.data.length == 0){
+            res.status(400).send({
+                error:"bad request"
+            })
+        }else{
+            data = req.body;
+            res.json(data);
+        }
+    }else{
+        res.status(400).send({
+        error: "bad request"
+    })
+    }
+
 })
 
 app.get('/data', (req, res) => {
