@@ -66,7 +66,14 @@ app.post('/data', (req, res) => {
 })
 
 app.get('/data', (req, res) => {
-    res.send(data);
+    console.log('data', typeof data)
+    if(typeof data == "object"){
+        res.status(200).send(data)
+    }else{
+        res.status(400).send({
+            error: "bad request"
+        })
+    }
 })
 
 // signup route

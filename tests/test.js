@@ -18,7 +18,18 @@ describe('/GET', ()=>{
         });
     });
 });
-
+describe('/GET data', () => {
+    it('it should return error if data is empty', (done) => {
+        chai.request(app)
+            .get('/data')
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('error').eql("bad request")
+                done();
+            });
+    });
+});
 describe('/POST data', ()=>{
     it('it should post data ', (done)=>{
         let dataString = {"data":"Any string"}
@@ -73,3 +84,5 @@ describe('/GET data', ()=>{
         });
     });
 });
+
+
