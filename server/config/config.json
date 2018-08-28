@@ -1,20 +1,25 @@
 {
-  "development": {
-    "username": "postgres",
-    "password": "123456seven",
-    "database": "serverMonitor",
-    "host": "127.0.0.1",
-    "port":5432,
-    "dialect": "postgres"
-  },
-  "test": {
-    "username": "postgres",
-    "password": "123456seven",
-    "database": "serverMonitor",
-    "host": "127.0.0.1",
-    "port":5432,
-    "dialect": "postgres"
+    "development": {
+      "username": "postgres",
+      "password": "123456seven",
+      "database": "serverMonitor",
+      "host": "127.0.0.1",
+      "port": 5432,
+      "dialect": "postgres"
+    },
+    "test": {
+      "username": "postgres",
+      "password": "123456seven",
+      "database": "serverMonitorTest",
+      "host": "127.0.0.1",
+      "port": 5432,
+      "dialect": "postgres"
+    }
+
   }
-}
+
+
+
+
 
 

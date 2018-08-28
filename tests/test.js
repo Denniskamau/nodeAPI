@@ -3,6 +3,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../app');
 let should = chai.should();
+
 chai.use(chaiHttp);
 
 
@@ -85,4 +86,37 @@ describe('/GET data', ()=>{
     });
 });
 
+describe('/POST /user/signup', ()=>{
+    it('it should return session token when user is registerd', (done)=>{
+       let user = {
+           email: "hackerbay@sample.com",
+           password: "SamplePassword"
+       }
+       chai.request(app)
+       .post('/user/signup')
+       .send(user)
+       .end((err,res)=>{
+           console.log('body', res.body)
+           res.should.have.status(200);
+           res.body.should.have.property('session')
+           done();
+       });
+    })
+})
 
+describe('/POST /user/login', ()=>{
+    it('it should return session token when user is logedin', (done)=>{
+        let user = {
+            email: "hackerbay@sample.com",
+            password: "SamplePassword"
+        }
+        chai.request(app)
+        .post('/user/login')
+        .send(user)
+        .end((err,res)=>{
+            res.should.have.status(200);
+            res.body.should.have.property('session')
+            done();
+        });
+    })
+})
