@@ -11,7 +11,6 @@ env:
 
 install:
   - npm install -g codecov
-  - npm install -g nyc
 
 notifications: 
   email:
