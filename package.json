@@ -12,6 +12,7 @@
     "dotenv": "^6.0.0",
     "express": "~4.0.0",
     "express-session": "^1.15.6",
+    "istanbul": "^0.4.5",
     "jsonwebtoken": "^8.3.0",
     "jwt-simple": "^0.5.1",
     "mocha": "^5.2.0",
@@ -28,8 +29,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "nyc  mocha ./tests/test",
-    "coverage":"istanbul cover _mocha ./tests/test -x *.test.js",
+    "coverage": "istanbul cover _mocha ./tests/test -x *.test.js",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
-    
   }
 }

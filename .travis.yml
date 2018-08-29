@@ -17,6 +17,7 @@ env:
 
 install:
   - npm install 
+  - npm install istanbul
   - npm install -g codecov
 
 notifications: 
