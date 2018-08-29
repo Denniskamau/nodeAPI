@@ -10,7 +10,7 @@ env:
   -NODE_ENV="development"
 
 install:
-  - npm install -g codecov
+  - npm install -g mocha
 
 notifications: 
   email:
