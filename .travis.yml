@@ -8,3 +8,6 @@ services:
 
 env:
   -NODE_ENV="development"
+
+install:
+  - npm install -g codecov

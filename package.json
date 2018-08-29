@@ -25,6 +25,10 @@
   },
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test":"mocha ./tests/test"
+    "test": "mocha ./tests/test"
+  },
+  "devDependencies": {
+    "codecov": "^3.0.4",
+    "nyc": "^13.0.1"
   }
 }
