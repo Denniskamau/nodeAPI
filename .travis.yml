@@ -4,12 +4,10 @@ node_js:
   "8.10.0"
 
 services:
- - postgresql
-
-postgres:
-  adapter: postgresql
-  database: serverMonitorTest
-  username: postgres
+  postgres:
+    adapter: postgresql
+    database: serverMonitorTest
+    username: postgres
 
 
 before_script:
