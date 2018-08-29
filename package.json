@@ -24,6 +24,7 @@
     "sequelize": "^4.38.0"
   },
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test":"mocha ./tests/test"
   }
 }
