@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha ./tests/test"
+    "test": "nyc mocha ./tests/test"
   },
   "devDependencies": {
     "codecov": "^3.0.4",
