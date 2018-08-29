@@ -6,7 +6,8 @@ node_js:
 services:
   - postgresql
 
-
+before_script:
+  - psql -c 'create database serverMonitorTest;' -U postgres
 
 script:
   - npm test
