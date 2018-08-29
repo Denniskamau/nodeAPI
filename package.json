@@ -27,6 +27,9 @@
   },
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "nyc mocha ./tests/test"
+    "test": "nyc  mocha ./tests/test",
+    "coverage":"istanbul cover _mocha ./tests/test -x *.test.js",
+    "showcoverage": "open ./tests/coverage/lcov-report/index.html"
+    
   }
 }
