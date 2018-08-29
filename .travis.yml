@@ -22,7 +22,7 @@ script:
 
 
 env:
-  -NODE_ENV="development"
+  - NODE_ENV="test"
 
 install:
   - npm install 
