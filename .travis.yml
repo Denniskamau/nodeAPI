@@ -2,8 +2,14 @@ language: node_js
 node_js:
   "8.10.0"
 
+postgres:
+  adapter: postgresql
+  database: serverMonitorTest
+  username: postgres
 before_script:
-  - psql -c 'createdb serverMonitorTest;' -U postgres
+  - "psql -c 'create database serverMonitorTest;' -U postgres"
+  - "sequelize db:migrate"
+
 script:
   - npm test
   - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
