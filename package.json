@@ -27,6 +27,6 @@
   },
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha ./tests/test"
+    "test": "nyc mocha ./tests/test"
   }
 }
