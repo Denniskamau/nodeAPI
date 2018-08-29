@@ -11,3 +11,9 @@ env:
 
 install:
   - npm install -g codecov
+  - npm install -g nyc
+
+notifications: 
+  email:
+    on_success: never
+    on_failure: change
