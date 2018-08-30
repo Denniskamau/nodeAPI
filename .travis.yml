@@ -8,7 +8,6 @@ services:
 
 before_script:
   - psql -c 'create database serverMonitorTest;' -U postgres
-  - npm run setupDb
 
 script:
   - npm test
