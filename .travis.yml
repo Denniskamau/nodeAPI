@@ -13,7 +13,8 @@ script:
   - npm test
   - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
   - codecov
-
+addons:
+  postgresql: "10.5"
 
 env:
   - NODE_ENV="test"
@@ -21,7 +22,6 @@ env:
 install:
   - npm install 
   - npm install istanbul
-  - npm install sequelize
   - npm install -g codecov
 
 notifications: 
