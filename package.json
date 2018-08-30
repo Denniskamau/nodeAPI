@@ -33,5 +33,8 @@
     "test": "nyc  mocha ./tests/test",
     "coverage": "istanbul cover _mocha ./tests/test -x *.test.js",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
+  },
+  "devDependencies": {
+    "sequelize-mock": "^0.10.2"
   }
 }
