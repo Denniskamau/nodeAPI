@@ -4,10 +4,8 @@ node_js:
   "8.10.0"
 
 services:
-  - postgresql
+  - postgres
 
-before_script:
-  - psql -c 'create database serverMonitorTest;' -U postgres
 
 script:
   - npm test
