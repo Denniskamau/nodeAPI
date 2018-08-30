@@ -19,6 +19,13 @@ module.exports = (DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         }
-    }, {});
+    }, {
+        instanceMethods: {
+            myTestFunc: function () {
+                console.log('mocking')
+                return 'Test User';
+             },
+            },
+    });
     return UserMock
 }
