@@ -16,6 +16,8 @@ script:
 addons:
   postgresql: "10.5"
 
+sudo: required
+
 env:
   - NODE_ENV="test"
 
