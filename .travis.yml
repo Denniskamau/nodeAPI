@@ -17,8 +17,6 @@ script:
 
 sudo: required
 
-env:
-  - NODE_ENV="test"
 
 install:
   - npm install 
