@@ -2,6 +2,6 @@
 let db = require('../server/models/index');
 module.exports = function truncate() {
     // return Promise.all(
-        db.UserMock.destroy({where: {}, force: true })
+        db.User.destroy({where: {}, force: true })
     // );
 }

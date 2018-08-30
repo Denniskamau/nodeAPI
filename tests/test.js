@@ -90,8 +90,8 @@ describe('/GET data', ()=>{
 describe('/POST /user/signup', ()=>{
 
      beforeEach(() => {
-         console.log('calling trancation')
-          truncate();
+        // console.log('calling trancation')
+        truncate();
      });
 
     it('it should return session token when user is registerd',(done)=>{
@@ -110,7 +110,24 @@ describe('/POST /user/signup', ()=>{
            
        });
        done();
-    })
+    }),
+        it('it should return error when user with the same email exist', (done) => {
+
+            let user = {
+                email: "hackerbay@sample.com",
+                password: "SamplePassword"
+            }
+            chai.request(app)
+                .post('/user/signup')
+                .send(user)
+                .end((err, res) => {
+                    console.log('body', res.body)
+                    res.should.have.status(400);
+                    res.body.should.have.property('session')
+
+                });
+            done();
+        })
 })
 
 describe('/POST /user/login', ()=>{
@@ -123,9 +140,41 @@ describe('/POST /user/login', ()=>{
         .post('/user/login')
         .send(user)
         .end((err,res)=>{
+          //  console.log('mwili', res.body)
             res.should.have.status(200);
             res.body.should.have.property('session')
         });
         done();
-    })
+    }),
+    it('should return 400 if user does not exist', (done)=>{
+        let user = {
+            email:"random@random.com",
+            password: "random"
+        }
+        chai.request(app)
+        .post('/user/login')
+        .send(user)
+        .end((err,res)=>{
+           // console.log('response', res.body)
+            res.should.have.status(400);
+            res.body.should.have.property('error')
+        });
+        done();
+    }),
+        it('should return 400 when if incorrect email is provided', (done) => {
+            let user = {
+            email: "hacker@sample.com",
+                password: "SamplePassword"
+            }
+            chai.request(app)
+                .post('/user/login')
+                .send(user)
+                .end((err, res) => {
+                  //  console.log('result', res.body)
+                    res.should.have.status(400);
+                    res.body.should.have.property('error')
+                });
+            done();
+        })
+
 })
