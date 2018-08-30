@@ -13,9 +13,6 @@ script:
   - codecov
 
 
-sudo: required
-
-
 install:
   - npm install 
   - npm install istanbul
