@@ -89,9 +89,10 @@ describe('/GET data', ()=>{
 
 describe('/POST /user/signup', ()=>{
 
-    //  beforeEach(() => {
-    //       truncate();
-    //  });
+     beforeEach(() => {
+         console.log('calling trancation')
+          truncate();
+     });
 
     it('it should return session token when user is registerd',(done)=>{
        
