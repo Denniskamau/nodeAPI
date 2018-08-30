@@ -1,7 +1,7 @@
 'use strict';
 
 const con = require('manakin').global;
-const dbHeader = require('./header');
+const dbHeader = require('./headers');
 const promise = dbHeader.defPromise;
 const header = dbHeader({
     query: e => {
