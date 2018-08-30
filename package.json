@@ -3,6 +3,7 @@
   "main": "server.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.5.1",
     "body-parser": "~1.0.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
@@ -14,6 +15,7 @@
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.3.0",
     "jwt-simple": "^0.5.1",
+    "manakin": "^0.5.1",
     "mocha": "^5.2.0",
     "mongoose": "~3.6.13",
     "morgan": "^1.9.0",
@@ -27,9 +29,9 @@
   },
   "scripts": {
     "start": "nodemon ./bin/www",
+    "setupDb": "sequelize db:migrate",
     "test": "NODE_ENV=test  nyc  mocha ./tests/test",
-    "coverage":"istanbul cover _mocha ./tests/test -x *.test.js",
+    "coverage": "istanbul cover _mocha ./tests/test -x *.test.js",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
-    
   }
 }
