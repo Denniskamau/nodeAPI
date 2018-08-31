@@ -22,7 +22,7 @@ fs
     (file !== basename) &&
     (file.slice(-3) === '.js'))
   .forEach(file => {
-    const model = sequelize.import('./userMock.js');
+    const model = sequelize.import('./user.js');
     db[model.name] = model;
   });
 
