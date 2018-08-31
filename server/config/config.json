@@ -1,7 +1,7 @@
 {
     "development": {
       "username": "postgres",
-      "password": "123456seven",
+      "password": null,
       "database": "serverMonitor",
       "host": "127.0.0.1",
       "port": 5432,
