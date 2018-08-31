@@ -7,7 +7,7 @@ services:
   - postgres
 
 before_script:
-  - psql -c 'create database serverMonitor_test;' -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
 script:
   - npm test
   - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
