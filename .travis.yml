@@ -18,7 +18,7 @@ script:
 install:
   - npm install 
   - npm install istanbul
-  - npm install sequelize
+  - npm install -g sequelize
   - npm install -g codecov
 
 notifications: 
