@@ -8,6 +8,7 @@ services:
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
+  - npm install sequelize@$(echo $SEQUELIZE)
 script:
   - npm run setupDb
   - npm test
@@ -18,7 +19,7 @@ script:
 install:
   - npm install 
   - npm install istanbul
-  - npm install -g sequelize
+  - npm install -g sequelize-cli
   - npm install -g codecov
 
 notifications: 
