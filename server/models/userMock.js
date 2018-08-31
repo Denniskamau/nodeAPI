@@ -3,7 +3,7 @@ const SequelizeMock = require('sequelize-mock');
 const dbMock = new SequelizeMock();
 
 module.exports = (DataTypes) => {
-    var User = dbMock.define('user', {
+    var UserMock = dbMock.define('user', {
     id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -22,5 +22,5 @@ module.exports = (DataTypes) => {
     }, {
 
     });
-    return User
+    return UserMock
 }
