@@ -90,8 +90,6 @@ describe('/GET data', ()=>{
 describe('/POST /user/signup', ()=>{
 
      beforeEach(() => {
-        // console.log('calling trancation')
-        
         truncate();
      });
 
@@ -141,7 +139,6 @@ describe('/POST /user/login', ()=>{
         .post('/user/login')
         .send(user)
         .end((err,res)=>{
-          //  console.log('mwili', res.body)
             res.should.have.status(200);
             res.body.should.have.property('session')
         });
@@ -156,7 +153,6 @@ describe('/POST /user/login', ()=>{
         .post('/user/login')
         .send(user)
         .end((err,res)=>{
-           // console.log('response', res.body)
             res.should.have.status(400);
             res.body.should.have.property('error')
         });
