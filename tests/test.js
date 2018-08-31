@@ -161,21 +161,21 @@ describe('/POST /user/login', ()=>{
             res.body.should.have.property('error')
         });
         done();
-    }),
-        it('should return 400 when if incorrect email is provided', (done) => {
-            let user = {
-            email: "hacker@sample.com",
-                password: "SamplePassword"
-            }
-            chai.request(app)
-                .post('/user/login')
-                .send(user)
-                .end((err, res) => {
-                  //  console.log('result', res.body)
-                    res.should.have.status(400);
-                    res.body.should.have.property('error')
-                });
-            done();
-        })
+    })
+        // it('should return 400 when if incorrect email is provided', (done) => {
+        //     let user = {
+        //     email: "hacker@sample.com",
+        //         password: "SamplePassword"
+        //     }
+        //     chai.request(app)
+        //         .post('/user/login')
+        //         .send(user)
+        //         .end((err, res) => {
+        //           //  console.log('result', res.body)
+        //             res.should.have.status(400);
+        //             res.body.should.have.property('error')
+        //         });
+        //     done();
+        // })
 
 })
