@@ -6,12 +6,13 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const cookieParser = require('cookie-parser');
 const config = require('./server/config/config')
-
+const cors = require('cors');
 
 const app = express()
 
 const routes = {
-    singup: require('./server/services/user/index')
+    singup: require('./server/services/user/index'),
+    website: require('./server/services/website/index')
 }
 //models
 const models = require('./server/models')
@@ -27,6 +28,7 @@ app.use(cookieParser())
 //logger
 app.use(logger('dev'))
 
+app.use(cors())
 
 //passport
 app.use(session({
@@ -78,4 +80,7 @@ app.get('/data', (req, res) => {
 
 // signup route
 app.use('/user/', routes.singup);
+
+//website route
+app.use('/website/', routes.website);
 module.exports = app

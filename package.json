@@ -10,6 +10,7 @@
     "codecov": "^3.0.4",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "~4.0.0",
     "express-session": "^1.15.6",
@@ -35,5 +36,4 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
   }
-
 }
