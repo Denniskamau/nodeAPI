@@ -160,3 +160,77 @@ describe('/POST /user/login', ()=>{
     })
 
 })
+
+describe('/POST /website/add',()=>{
+    it('should return 200 after the post with request string',(done)=>{
+        let website = {
+            name:'test',
+            url: 'www.test.com'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((res)=>{
+            res.should.have.status(200)
+        })
+    }),
+    it('should return 400 after the post is null',(done)=>{
+        let website = {
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((res)=>{
+            res.should.have.status(400)
+        })
+    }),
+    it('should return 400 when url is invalid',(done)=>{
+        let website = {
+            name:'test',
+            url: 'testingtesting'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((res)=>{
+            res.should.have.status(400)
+        })
+    }),
+    it('should return 400 when same name is provides',(done)=>{
+        let website = {
+            name:'test',
+            url: 'testingtesting'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((res)=>{
+            res.should.have.status(400)
+        })
+    }),
+    it('should return 400 when same url is provided',(done)=>{
+        let website = {
+            name:'test',
+            url: 'testingtesting'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((res)=>{
+            res.should.have.status(400)
+        })
+    }),
+    it('should return 401 when user is not authorised',(done)=>{
+        let website = {
+            name:'test',
+            url: 'testingtesting'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((res)=>{
+            res.should.have.status(401)
+        })
+    })
+
+})
