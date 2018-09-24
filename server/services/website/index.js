@@ -22,12 +22,12 @@ router.post('/add',(req,res)=>{
         const website = {
             name: req.body.name,
             url: req.body.url,
-            userId:userId,
+            userID:userId,
             status:'Online'
         }
         Websites.create(website).then((newWebsite)=>{
             if(newWebsite){
-                res.status(200).send({message:"website added"})
+                res.status(200).send({website})
             }
             else {
                 res.status(400).send({message:"Website not added"})
@@ -41,6 +41,22 @@ router.post('/add',(req,res)=>{
 })
 
 router.get('/list', (req,res)=>{
+    var auth = req.headers['authorization']; 
+    if(!auth) {     // No Authorization header was passed in so it's the first time the browser hit us
+    res.statusCode = 401;
+    res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');
+
+    res.send({error:'Authorization required'
+    });
+}
+    else {
+        Websites.findAll({
+            attributes: ['*']
+        }).then(website => {
+            console.log('website', JSON.stringify(website))
+            res.send(website)
+        })
+    }
     
 })
 
