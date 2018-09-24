@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config')
+const Websites = require('../../models').Websites
 router.post('/add',(req,res)=>{
     // check header or url parameters or post parameters for token
     var auth = req.headers['authorization']; 
@@ -11,26 +12,36 @@ router.post('/add',(req,res)=>{
 
     res.send({error:'Authorization required'
     });
-}else if (auth){
+    }else{
     
-    let tmp = auth.split(' '); 
-    let token = tmp[1].slice(0, -1)
-    let decode = jwt.verify(token,config.secret)
-    let userId = decode.id 
-    // store data in batabase
-    const website = {
-        name: req.body.name,
-        url: req.body.url
-    }
-    res.send(website)
+        let tmp = auth.split(' '); 
+        let token = tmp[1].slice(0, -1)
+        let decode = jwt.verify(token,config.secret)
+        let userId = decode.id 
+        // store data in batabase
+        const website = {
+            name: req.body.name,
+            url: req.body.url,
+            userId:userId,
+            status:'Online'
+        }
+        Websites.create(website).then((newWebsite)=>{
+            if(newWebsite){
+                res.status(200).send({message:"website added"})
+            }
+            else {
+                res.status(400).send({message:"Website not added"})
+            }
+        })
+        
 
-}
+    }
  
 
 })
 
 router.get('/list', (req,res)=>{
-    console.log('/list reached')
+    
 })
 
 module.exports = router;
