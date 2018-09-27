@@ -19,20 +19,28 @@ router.post('/add',(req,res)=>{
         let decode = jwt.verify(token,config.secret)
         let userId = decode.id 
         // store data in batabase
-        const website = {
-            Name: req.body.name,
-            URL: req.body.url,
-            UserID:userId,
-            Status:'Online'
+        
+        if(req.body.legth === undefined){
+            res.status(400).send({error:"no data found"})
+
         }
-        Websites.create(website).then((newWebsite)=>{
-            if(newWebsite){
-                res.status(200).send({website})
+        else {
+            const website = {
+                Name: req.body.name,
+                URL: req.body.url,
+                UserID:userId,
+                Status:'Online'
             }
-            else {
-                res.status(400).send({message:"Website not added"})
-            }
-        })
+            Websites.create(website).then((newWebsite)=>{
+                if(newWebsite){
+                    res.status(200).send({website})
+                }
+                else {
+                    res.status(400).send({message:"Website not added"})
+                }
+            })
+        }
+
         
 
     }
