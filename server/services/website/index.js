@@ -20,10 +20,10 @@ router.post('/add',(req,res)=>{
         let userId = decode.id 
         // store data in batabase
         const website = {
-            name: req.body.name,
-            url: req.body.url,
-            userID:userId,
-            status:'Online'
+            Name: req.body.name,
+            URL: req.body.url,
+            UserID:userId,
+            Status:'Online'
         }
         Websites.create(website).then((newWebsite)=>{
             if(newWebsite){
@@ -51,7 +51,8 @@ router.get('/list', (req,res)=>{
 }
     else {
         Websites.findAll({
-            attributes: ['*']
+                attributes: ['Name','URL','Status','UserID']
+            
         }).then(website => {
             console.log('website', JSON.stringify(website))
             res.send(website)

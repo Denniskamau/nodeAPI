@@ -1,4 +1,3 @@
-const User = require('../server/models').UserMock
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let app = require('../app');
