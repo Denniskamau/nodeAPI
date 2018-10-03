@@ -58,7 +58,7 @@ describe('/POST data', ()=>{
             done();
         });
     });
-})
+});
 
 describe('/POST data', () => {
     it('it should return 400 status for empty data ', (done) => {
@@ -72,7 +72,7 @@ describe('/POST data', () => {
                 done();
             });
     });
-})
+});
 
 describe('/GET data', ()=>{
     it('it should get data object', (done)=>{
@@ -105,7 +105,6 @@ describe('/POST /user/signup', ()=>{
            
            res.should.have.status(200);
            res.body.should.have.property('session')
-           console.log('session',res.body)
        });
        done();
     }),
@@ -126,7 +125,7 @@ describe('/POST /user/signup', ()=>{
                 });
             done();
         })
-})
+});
 
 describe('/POST /user/login', ()=>{
  
@@ -159,10 +158,31 @@ describe('/POST /user/login', ()=>{
         done();
     })
 
+});
+
+describe(' /POST /website/add check that all parameters are there', ()=>{
+    it('should return 200 and the data object when correct parameters are given', (done)=>{
+        let website = {
+            name:'testing',
+            url:'www.testing.com'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+        .send(website)
+        .end((err,res)=>{
+            res.should.have.status(200)
+            res.should.be.json;
+            res.body.should.have.property('status')
+            
+        })
+        done();
+    })
+
 })
 
-describe('/POST /website/add',()=>{
-    //let session = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM4MDM4NzU4fQ.rYilTxnghuQFgz6N72r0USsRIGcR7Rfwhni2cX3jK6A'
+
+describe('/POST /website/add make sure the user is authorised',()=>{
     it('should return 401 when Authorization headers are not present',(done)=>{
         let website = {
             name:'test',
@@ -172,14 +192,53 @@ describe('/POST /website/add',()=>{
         .post('/website/add')
         .send(website)
         .end((err,res)=>{
-            if (err) 
-                return done(err)
-            res.should.have.status(401);
+            console.log(res.status)
+            res.status.should.eql(401);
             res.body.should.have.property('error')
+            
+        })
+        done();
+    });
 
+});
+
+
+    
+
+
+describe('should check that correct data is provided', ()=>{
+    it('should return 400 when no name is provided', (done)=>{
+        let website = {
+            url:'www.testing.com'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+        .send(website)
+        .end((err,res)=>{
+            console.log('status', res.body)
+            res.status.should.eql(400);
+            res.body.should.have.property('error')
+            
         })
         done();
     })
+        // it('should return 400 when no url is provided', (done)=>{
+    //     let website = {
+    //         name:'test'
+    //     }
+    //     chai.request(app)
+    //     .post('/website/add')
+    //     .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+    //     .send(website)
+    //     .end((err,res)=>{
+    //         console.log(res.status)
+    //         res.should.have.status(400);
+    //         res.body.should.have.property('error')
+            
+    //     })
+    //     done(); 
+    // })
 })
     // it('should return 400 when url is invalid',(done)=>{
     //     let website = {

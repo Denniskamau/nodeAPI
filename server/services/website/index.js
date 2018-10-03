@@ -14,14 +14,14 @@ router.post('/add',(req,res)=>{
     res.send({error:'Authorization required'
     });
     }else{
-    
         let tmp = auth.split(' '); 
         let token = tmp[1].slice(0, -1)
         let decode = jwt.verify(token,config.secret)
         let userId = decode.id 
         // store data in batabase
-        
+       
         if(req.body.name === undefined){
+            
             res.status(400).send({error:"no data found"})
 
         }else if(req.body.url === undefined){
