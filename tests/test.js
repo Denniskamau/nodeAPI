@@ -162,29 +162,25 @@ describe('/POST /user/login', ()=>{
 })
 
 describe('/POST /website/add',()=>{
-    //var session 
-    it('should return 400 after the post is null',(done)=>{
-        let user = {
-            email:'test@test.com',
-            password:'password'
-        }
-        chai.request(app)
-        .post('/user/signup')
-        .send(user)
-        .end((err,res)=>{
-            session = res.body.session
-        })
+    //let session = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM4MDM4NzU4fQ.rYilTxnghuQFgz6N72r0USsRIGcR7Rfwhni2cX3jK6A'
+    it('should return 401 when Authorization headers are not present',(done)=>{
         let website = {
+            name:'test',
+            url: 'www.test.com'
         }
-        console.log('session is', session)
         chai.request(app)
         .post('/website/add')
         .send(website)
         .end((err,res)=>{
-            res.should.have.status(400);
+            if (err) 
+                return done(err)
+            res.should.have.status(401);
+            res.body.should.have.property('error')
+
         })
         done();
-    }),
+    })
+})
     // it('should return 400 when url is invalid',(done)=>{
     //     let website = {
     //         name:'test',
@@ -198,44 +194,42 @@ describe('/POST /website/add',()=>{
     //     })
     //     done();
     // }),
-    it('should return 400 when same name is provides',(done)=>{
-        let website = {
-            name:'test',
-            url: 'testingtesting'
-        }
-        chai.request(app)
-        .post('/website/add')
-        .send(website)
-        .end((res)=>{
-            res.should.have.status(400)
-        })
-        done();
-    }),
-    it('should return 400 when same url is provided',(done)=>{
-        let website = {
-            name:'test',
-            url: 'testingtesting'
-        }
-        chai.request(app)
-        .post('/website/add')
-        .send(website)
-        .end((res)=>{
-            res.should.have.status(400)
-        })
-        done();
-    }),
-    it('should return 401 when user is not authorised',(done)=>{
-        let website = {
-            name:'test',
-            url: 'testingtesting'
-        }
-        chai.request(app)
-        .post('/website/add')
-        .send(website)
-        .end((res)=>{
-            res.should.have.status(401)
-        })
-        done();
-    })
-
-})
+    // it('should return 400 when same name is provides',(done)=>{
+    //     let website = {
+    //         name:'test',
+    //         url: 'testingtesting'
+    //     }
+    //     chai.request(app)
+    //     .post('/website/add')
+    //     .send(website)
+    //     .end((res)=>{
+    //         res.should.have.status(400)
+    //     })
+    //     done();
+    // }),
+    // it('should return 400 when same url is provided',(done)=>{
+    //     let website = {
+    //         name:'test',
+    //         url: 'testingtesting'
+    //     }
+    //     chai.request(app)
+    //     .post('/website/add')
+    //     .send(website)
+    //     .end((res)=>{
+    //         res.should.have.status(400)
+    //     })
+    //     done();
+    // }),
+    // it('should return 401 when user is not authorised',(done)=>{
+    //     let website = {
+    //         name:'test',
+    //         url: 'testingtesting'
+    //     }
+    //     chai.request(app)
+    //     .post('/website/add')
+    //     .send(website)
+    //     .end((res)=>{
+    //         res.should.have.status(401)
+    //     })
+    //     done();
+    // })

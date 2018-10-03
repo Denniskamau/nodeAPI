@@ -1,3 +1,4 @@
+
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken');
@@ -20,7 +21,10 @@ router.post('/add',(req,res)=>{
         let userId = decode.id 
         // store data in batabase
         
-        if(req.body.legth === undefined){
+        if(req.body.name === undefined){
+            res.status(400).send({error:"no data found"})
+
+        }else if(req.body.url === undefined){
             res.status(400).send({error:"no data found"})
 
         }
