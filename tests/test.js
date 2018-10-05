@@ -6,7 +6,7 @@ let truncate = require('./truncate');
 
 chai.use(chaiHttp);
 
-var session 
+
 describe('/GET', ()=>{
     it('is should get the index', (done)=>{
         chai.request(app)
@@ -160,47 +160,79 @@ describe('/POST /user/login', ()=>{
 
 });
 
-describe(' /POST /website/add check that all parameters are there', ()=>{
-    it('should return 200 and the data object when correct parameters are given', (done)=>{
-        let website = {
-            name:'testing',
-            url:'www.testing.com'
-        }
+
+
+
+// Test /websites/list
+describe('/website/list',()=>{
+    it('should return an object with the values of websites in the database', (done)=>{
         chai.request(app)
-        .post('/website/add')
+        .get('/website/list')
         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-        .send(website)
         .end((err,res)=>{
             res.should.have.status(200)
             res.should.be.json;
-            res.body.should.have.property('status')
-            
+        })
+        done();
+    }),
+
+    it('should make sure that one is authenticated', (done)=>{
+        chai.request(app)
+        .get('/website/list')
+        .end((err,res)=>{
+            res.should.have.status(401)
+            res.should.have.property('error')
         })
         done();
     })
-
 })
 
 
-describe('/POST /website/add make sure the user is authorised',()=>{
-    it('should return 401 when Authorization headers are not present',(done)=>{
-        let website = {
-            name:'test',
-            url: 'www.test.com'
-        }
-        chai.request(app)
-        .post('/website/add')
-        .send(website)
-        .end((err,res)=>{
-            console.log(res.status)
-            res.status.should.eql(401);
-            res.body.should.have.property('error')
-            
-        })
-        done();
-    });
 
-});
+
+
+
+// describe(' /POST /website/add check that all parameters are there', ()=>{
+//     it('should return 200 and the data object when correct parameters are given', (done)=>{
+//         let website = {
+//             name:'testing',
+//             url:'www.testing.com'
+//         }
+//         chai.request(app)
+//         .post('/website/add')
+//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+//         .send(website)
+//         .end((err,res)=>{
+//             res.should.have.status(200)
+//             res.should.be.json;
+//             res.body.should.have.property('status')
+            
+//         })
+//         done();
+//     })
+
+// });
+
+
+// describe('/POST /website/add make sure the user is authorised',()=>{
+//     it('should return 401 when Authorization headers are not present',(done)=>{
+//         let website = {
+//             name:'test',
+//             url: 'www.test.com'
+//         }
+//         chai.request(app)
+//         .post('/website/add')
+//         .send(website)
+//         .end((err,res)=>{
+//             console.log(res.status)
+//             res.status.should.eql(401);
+//             res.body.should.have.property('error')
+            
+//         })
+//         done();
+//     });
+
+// });
 
 
     
@@ -226,41 +258,41 @@ describe('should check that correct data is provided', ()=>{
 
 })
 
-describe('check if url is valid', ()=>{
-    it('should return 400 if the url is invalid', (done)=>{
-        let website = {
-            name:'test',
-            url:'testingtesting'
-        }
-        chai.request(app)
-        .post('/website/add')
-        .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-        .send(website)
-        .end((err,res)=>{
-           // res.status.should.eql(400);
-            //res.body.should.have.property('error')
-            res.should.have.status(400)
-        })
-        done();
-    })
-})
+// describe('check if url is valid', ()=>{
+//     it('should return 400 if the url is invalid', (done)=>{
+//         let website = {
+//             name:'test',
+//             url:'testingtesting'
+//         }
+//         chai.request(app)
+//         .post('/website/add')
+//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+//         .send(website)
+//         .end((err,res)=>{
+//            // res.status.should.eql(400);
+//             //res.body.should.have.property('error')
+//             res.should.have.status(400)
+//         })
+//         done();
+//     })
+// })
 
-describe('check if a site with that name exist', ()=>{
-    it('should return 400 status if a site with the same name exist', (done)=>{
-        let website = {
-            name:'test',
-            url: 'www.test.com'
-        }
-        chai.request(app)
-        .post('/website/add')
-        .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-        .send(website)
-        .end((err,res)=>{
-            res.shoul.have.status(400)
-        })
-        done();
-    })
-})
+// describe('check if a site with that name exist', ()=>{
+//     it('should return 400 status if a site with the same name exist', (done)=>{
+//         let website = {
+//             name:'test',
+//             url: 'www.test.com'
+//         }
+//         chai.request(app)
+//         .post('/website/add')
+//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+//         .send(website)
+//         .end((err,res)=>{
+//             res.shoul.have.status(400)
+//         })
+//         done();
+//     })
+// })
 
 describe('check if a site with that url exist', ()=>{
     it('should return 400 status if a site with the same url exist', (done)=>{
