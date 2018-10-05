@@ -20,7 +20,7 @@ router.post('/add',(req,res)=>{
         let decode = jwt.verify(token,config.secret)
         let userId = decode.id 
         // store data in batabase
-       
+       // check if the correct parameters are orovided
         if(req.body.name === undefined){
             
             res.status(400).send({error:"no data found"})
@@ -30,27 +30,53 @@ router.post('/add',(req,res)=>{
 
         }
         else {
-            if(validUrl.isUri(req.body.url)){
-                const website = {
-                    Name: req.body.name,
-                    URL: req.body.url,
-                    UserID:userId,
-                    Status:'Online'
+            // check if there is a website with the same name already in the db
+            Websites.findOne ({
+                where: {
+                    Name : req.body.name
                 }
-                Websites.create(website).then((newWebsite)=>{
-                    if(newWebsite){
-                        res.status(200).send({website})
+            }).then( (website)=>{
+                if(!website) {
+                    //check if the same url exist
+                    Websites.findOne({
+                        where:{
+                            URL: req.body.url
+                        }
+                    }).then( (website)=>{
+                        if(!website){
+                                                //save the website
+                        // check if the url is valid
+                        if(validUrl.isUri(req.body.url)){
+                        const website = {
+                            Name: req.body.name,
+                            URL: req.body.url,
+                            UserID:userId,
+                            Status:'Online'
+                        }
+                        Websites.create(website).then((newWebsite)=>{
+                            if(newWebsite){
+                                res.status(200).send({website})
+                            }
+                            else {
+                                res.status(400).send({message:"Website not added"})
+                            }
+                        })
+                        }
+                        else {
+                            res.status(400).send({
+                                error:"invalid url"
+                            })
+                        }
                     }
-                    else {
-                        res.status(400).send({message:"Website not added"})
-                    }
-                })
-            }
-            else {
-                res.status(400).send({
-                    error:"invalid url"
-                })
-            }
+                    })
+
+                }else {
+                    // return an error
+                    res.status(400).send({
+                        error:"website with that name already exist"
+                    })
+                }
+            })
 
         }
 
