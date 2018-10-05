@@ -127,8 +127,8 @@ describe('/POST /user/signup', ()=>{
         })
 });
 
+
 describe('/POST /user/login', ()=>{
- 
     it('it should return session token when user is logedin', (done)=>{
         let user = {
             email: "hackerbay@sample.com",
@@ -158,8 +158,7 @@ describe('/POST /user/login', ()=>{
         done();
     })
 
-});
-
+})
 
 
 
