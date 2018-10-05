@@ -86,46 +86,46 @@ chai.use(chaiHttp);
 //     });
 // });
 
-// describe('/POST /user/signup', ()=>{
+describe('/POST /user/signup', ()=>{
 
-//      beforeEach(() => {
-//         truncate();
-//      });
+     beforeEach(() => {
+        truncate();
+     });
 
-//     it('it should return session token when user is registerd',(done)=>{
+    it('it should return session token when user is registerd',(done)=>{
        
-//        let user = {
-//            email: "hackerbay@sample.com",
-//            password: "SamplePassword"
-//        }
-//         chai.request(app)
-//        .post('/user/signup')
-//        .send(user)
-//        .end((err,res)=>{
+       let user = {
+           email: "hackerbay@sample.com",
+           password: "SamplePassword"
+       }
+        chai.request(app)
+       .post('/user/signup')
+       .send(user)
+       .end((err,res)=>{
            
-//            res.should.have.status(200);
-//            res.body.should.have.property('session')
-//        });
-//        done();
-//     }),
-//         it('it should return error when user with the same email exist', (done) => {
+           res.should.have.status(200);
+           res.body.should.have.property('session')
+       });
+       done();
+    }),
+        it('it should return error when user with the same email exist', (done) => {
 
-//             let user = {
-//                 email: "hackerbay@sample.com",
-//                 password: "SamplePassword"
-//             }
-//             chai.request(app)
-//                 .post('/user/signup')
-//                 .send(user)
-//                 .end((err, res) => {
+            let user = {
+                email: "hackerbay@sample.com",
+                password: "SamplePassword"
+            }
+            chai.request(app)
+                .post('/user/signup')
+                .send(user)
+                .end((err, res) => {
                     
-//                     res.should.have.status(400);
-//                     res.body.should.have.property('session')
+                    res.should.have.status(400);
+                    res.body.should.have.property('session')
 
-//                 });
-//             done();
-//         })
-// });
+                });
+            done();
+        })
+});
 
 
 describe('/POST /user/login', ()=>{
@@ -140,9 +140,9 @@ describe('/POST /user/login', ()=>{
         .end((err,res)=>{
             res.should.have.status(200);
             res.body.should.have.property('session')
-            done();
+            
         });
-        
+        done();
     }),
     it('should return 400 if user does not exist', (done)=>{
         console.log('testing 400 login')
@@ -158,9 +158,9 @@ describe('/POST /user/login', ()=>{
             console.log('login body', res.body)
             res.should.have.status(400);
             res.body.should.have.property('error')
-            done();
+            
         });
-        
+        done();
     })
 
 })
