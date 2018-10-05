@@ -223,22 +223,7 @@ describe('should check that correct data is provided', ()=>{
         })
         done();
     })
-        // it('should return 400 when no url is provided', (done)=>{
-    //     let website = {
-    //         name:'test'
-    //     }
-    //     chai.request(app)
-    //     .post('/website/add')
-    //     .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-    //     .send(website)
-    //     .end((err,res)=>{
-    //         console.log(res.status)
-    //         res.should.have.status(400);
-    //         res.body.should.have.property('error')
-            
-    //     })
-    //     done(); 
-    // })
+
 })
     // it('should return 400 when url is invalid',(done)=>{
     //     let website = {

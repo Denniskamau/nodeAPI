@@ -4,6 +4,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config')
 const Websites = require('../../models').Websites
+const validUrl = require('valid-url')
 router.post('/add',(req,res)=>{
     // check header or url parameters or post parameters for token
     var auth = req.headers['authorization']; 
@@ -29,20 +30,28 @@ router.post('/add',(req,res)=>{
 
         }
         else {
-            const website = {
-                Name: req.body.name,
-                URL: req.body.url,
-                UserID:userId,
-                Status:'Online'
+            if(validUrl.isUri(req.body.url)){
+                const website = {
+                    Name: req.body.name,
+                    URL: req.body.url,
+                    UserID:userId,
+                    Status:'Online'
+                }
+                Websites.create(website).then((newWebsite)=>{
+                    if(newWebsite){
+                        res.status(200).send({website})
+                    }
+                    else {
+                        res.status(400).send({message:"Website not added"})
+                    }
+                })
             }
-            Websites.create(website).then((newWebsite)=>{
-                if(newWebsite){
-                    res.status(200).send({website})
-                }
-                else {
-                    res.status(400).send({message:"Website not added"})
-                }
-            })
+            else {
+                res.status(400).send({
+                    error:"invalid url"
+                })
+            }
+
         }
 
         

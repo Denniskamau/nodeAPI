@@ -27,7 +27,8 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.38.0",
-    "sequelize-mock": "^0.10.2"
+    "sequelize-mock": "^0.10.2",
+    "valid-url": "^1.0.9"
   },
   "scripts": {
     "start": "nodemon ./bin/www",
