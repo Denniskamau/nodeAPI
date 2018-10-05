@@ -7,125 +7,125 @@ let truncate = require('./truncate');
 chai.use(chaiHttp);
 
 
-describe('/GET', ()=>{
-    it('is should get the index', (done)=>{
-        chai.request(app)
-        .get('/')
-        .end((err,res)=>{
-            res.should.have.status(200)
-            res.should.be.json;
-            res.body.should.have.property('status')
-            done();
-        });
-    });
-});
-describe('/GET data', () => {
-    it('it should return error if data is empty', (done) => {
-        chai.request(app)
-            .get('/data')
-            .end((err, res) => {
-                res.should.have.status(400);
-                res.should.be.json;
-                res.body.should.have.property('error').eql("bad request")
-                done();
-            });
-    });
-});
-describe('/POST data', ()=>{
-    it('it should post data ', (done)=>{
-        let dataString = {"data":"Any string"}
-        chai.request(app)
-        .post('/data')
-        .send(dataString)
-        .end((err,res)=>{
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.should.have.property('data').eql("Any string");
-            done();
-        });
-    });
-});
+// describe('/GET', ()=>{
+//     it('is should get the index', (done)=>{
+//         chai.request(app)
+//         .get('/')
+//         .end((err,res)=>{
+//             res.should.have.status(200)
+//             res.should.be.json;
+//             res.body.should.have.property('status')
+//             done();
+//         });
+//     });
+// });
+// describe('/GET data', () => {
+//     it('it should return error if data is empty', (done) => {
+//         chai.request(app)
+//             .get('/data')
+//             .end((err, res) => {
+//                 res.should.have.status(400);
+//                 res.should.be.json;
+//                 res.body.should.have.property('error').eql("bad request")
+//                 done();
+//             });
+//     });
+// });
+// describe('/POST data', ()=>{
+//     it('it should post data ', (done)=>{
+//         let dataString = {"data":"Any string"}
+//         chai.request(app)
+//         .post('/data')
+//         .send(dataString)
+//         .end((err,res)=>{
+//             res.should.have.status(200);
+//             res.body.should.be.a('object');
+//             res.body.should.have.property('data').eql("Any string");
+//             done();
+//         });
+//     });
+// });
 
-describe('/POST data', ()=>{
-    it('it should return 400 status for integer ', (done)=>{
-        let dataInt = { "data": 3 }
-        chai.request(app)
-        .post('/data')
-        .send(dataInt)
-        .end((err,res)=>{
-            res.should.have.status(400);
-            res.body.should.have.property('error');
-            done();
-        });
-    });
-});
+// describe('/POST data', ()=>{
+//     it('it should return 400 status for integer ', (done)=>{
+//         let dataInt = { "data": 3 }
+//         chai.request(app)
+//         .post('/data')
+//         .send(dataInt)
+//         .end((err,res)=>{
+//             res.should.have.status(400);
+//             res.body.should.have.property('error');
+//             done();
+//         });
+//     });
+// });
 
-describe('/POST data', () => {
-    it('it should return 400 status for empty data ', (done) => {
-        let dataInt = {"data": ""}
-        chai.request(app)
-            .post('/data')
-            .send(dataInt)
-            .end((err, res) => {
-                res.should.have.status(400);
-                res.body.should.have.property('error');
-                done();
-            });
-    });
-});
+// describe('/POST data', () => {
+//     it('it should return 400 status for empty data ', (done) => {
+//         let dataInt = {"data": ""}
+//         chai.request(app)
+//             .post('/data')
+//             .send(dataInt)
+//             .end((err, res) => {
+//                 res.should.have.status(400);
+//                 res.body.should.have.property('error');
+//                 done();
+//             });
+//     });
+// });
 
-describe('/GET data', ()=>{
-    it('it should get data object', (done)=>{
-        chai.request(app)
-        .get('/data')
-        .end((err,res)=>{
-            res.should.have.status(200);
-            res.should.be.json;
-            done();
-        });
-    });
-});
+// describe('/GET data', ()=>{
+//     it('it should get data object', (done)=>{
+//         chai.request(app)
+//         .get('/data')
+//         .end((err,res)=>{
+//             res.should.have.status(200);
+//             res.should.be.json;
+//             done();
+//         });
+//     });
+// });
 
-describe('/POST /user/signup', ()=>{
+// describe('/POST /user/signup', ()=>{
 
-     beforeEach(() => {
-        truncate();
-     });
+//      beforeEach(() => {
+//         truncate();
+//      });
 
-    it('it should return session token when user is registerd',(done)=>{
+//     it('it should return session token when user is registerd',(done)=>{
        
-       let user = {
-           email: "hackerbay@sample.com",
-           password: "SamplePassword"
-       }
-        chai.request(app)
-       .post('/user/signup')
-       .send(user)
-       .end((err,res)=>{
+//        let user = {
+//            email: "hackerbay@sample.com",
+//            password: "SamplePassword"
+//        }
+//         chai.request(app)
+//        .post('/user/signup')
+//        .send(user)
+//        .end((err,res)=>{
            
-           res.should.have.status(200);
-           res.body.should.have.property('session')
-       });
-       done();
-    }),
-        it('it should return error when user with the same email exist', (done) => {
+//            res.should.have.status(200);
+//            res.body.should.have.property('session')
+//        });
+//        done();
+//     }),
+//         it('it should return error when user with the same email exist', (done) => {
 
-            let user = {
-                email: "hackerbay@sample.com",
-                password: "SamplePassword"
-            }
-            chai.request(app)
-                .post('/user/signup')
-                .send(user)
-                .end((err, res) => {
+//             let user = {
+//                 email: "hackerbay@sample.com",
+//                 password: "SamplePassword"
+//             }
+//             chai.request(app)
+//                 .post('/user/signup')
+//                 .send(user)
+//                 .end((err, res) => {
                     
-                    res.should.have.status(400);
-                    res.body.should.have.property('session')
+//                     res.should.have.status(400);
+//                     res.body.should.have.property('session')
 
-                });
-            done();
-        })
-});
+//                 });
+//             done();
+//         })
+// });
 
 
 describe('/POST /user/login', ()=>{
@@ -140,10 +140,12 @@ describe('/POST /user/login', ()=>{
         .end((err,res)=>{
             res.should.have.status(200);
             res.body.should.have.property('session')
+            done();
         });
-        done();
+        
     }),
     it('should return 400 if user does not exist', (done)=>{
+        console.log('testing 400 login')
         let user = {
             email:"random@random.com",
             password: "random"
@@ -152,39 +154,42 @@ describe('/POST /user/login', ()=>{
         .post('/user/login')
         .send(user)
         .end((err,res)=>{
+            console.log('login status', res.status)
+            console.log('login body', res.body)
             res.should.have.status(400);
             res.body.should.have.property('error')
+            done();
         });
-        done();
+        
     })
 
 })
 
 
 
-// Test /websites/list
-describe('/website/list',()=>{
-    it('should return an object with the values of websites in the database', (done)=>{
-        chai.request(app)
-        .get('/website/list')
-        .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-        .end((err,res)=>{
-            res.should.have.status(200)
-            res.should.be.json;
-        })
-        done();
-    }),
+// // Test /websites/list
+// describe('/website/list',()=>{
+//     it('should return an object with the values of websites in the database', (done)=>{
+//         chai.request(app)
+//         .get('/website/list')
+//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+//         .end((err,res)=>{
+//             res.should.have.status(200)
+//             res.should.be.json;
+//         })
+//         done();
+//     }),
 
-    it('should make sure that one is authenticated', (done)=>{
-        chai.request(app)
-        .get('/website/list')
-        .end((err,res)=>{
-            res.should.have.status(401)
-            res.should.have.property('error')
-        })
-        done();
-    })
-})
+//     it('should make sure that one is authenticated', (done)=>{
+//         chai.request(app)
+//         .get('/website/list')
+//         .end((err,res)=>{
+//             res.should.have.status(401)
+//             res.should.have.property('error')
+//         })
+//         done();
+//     })
+// })
 
 
 

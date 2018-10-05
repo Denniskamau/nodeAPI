@@ -67,7 +67,7 @@ module.exports = (passport, user)=> {
                                 return done(null,false)
                             }
                             if(newUser){
-                                console.log('hit')
+                                
                                 return done(null,newUser);
                             }
                         });
@@ -115,7 +115,7 @@ module.exports = (passport, user)=> {
             // all is well, return successful user
             return done(null, user);
             }).catch((err)=>{
-                console.log("Error:",err)
+            
                 return done(null, false, {message: 'Something went wrong with your Signin'});
             })
         } ));
