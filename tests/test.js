@@ -218,25 +218,25 @@ describe('/website/list',()=>{
 // });
 
 
-// describe('/POST /website/add make sure the user is authorised',()=>{
-//     it('should return 401 when Authorization headers are not present',(done)=>{
-//         let website = {
-//             name:'test',
-//             url: 'www.test.com'
-//         }
-//         chai.request(app)
-//         .post('/website/add')
-//         .send(website)
-//         .end((err,res)=>{
-//             console.log(res.status)
-//             res.status.should.eql(401);
-//             res.body.should.have.property('error')
+describe('/POST /website/add make sure the user is authorised',()=>{
+    it('should return 401 when Authorization headers are not present',(done)=>{
+        let website = {
+            name:'test',
+            url: 'www.test.com'
+        }
+        chai.request(app)
+        .post('/website/add')
+        .send(website)
+        .end((err,res)=>{
+            console.log(res.status)
+            res.status.should.eql(401);
+            res.body.should.have.property('error')
             
-//         })
-//         done();
-//     });
+        })
+        done();
+    });
 
-// });
+});
 
 
     
