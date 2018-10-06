@@ -1,6 +1,5 @@
 const express = require('express')
 const passport = require('passport');
-const userController = require('../../controllers').singUp
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config')
 

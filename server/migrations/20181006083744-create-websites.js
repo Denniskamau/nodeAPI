@@ -14,11 +14,11 @@ module.exports = {
       URL: {
         type: Sequelize.STRING
       },
+      UserId: {
+        type: Sequelize.INTEGER
+      },
       Status: {
         type: Sequelize.STRING
-      },
-      UserID: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

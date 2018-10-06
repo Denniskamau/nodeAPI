@@ -7,6 +7,7 @@
     "body-parser": "~1.0.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "check-valid-url": "0.0.2",
     "codecov": "^3.0.4",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",

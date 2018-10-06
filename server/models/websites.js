@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var Websites = sequelize.define('Websites', {
     Name: DataTypes.STRING,
     URL: DataTypes.STRING,
-    Status: DataTypes.STRING,
-    UserID: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    Status: DataTypes.STRING
   }, {});
   Websites.associate = function(models) {
     // associations can be defined here
