@@ -68,7 +68,7 @@ module.exports = (passport, user)=> {
                             }
                             if(newUser){
                                 
-                                return done(null,newUser);
+                                return done(null,newUser)
                             }
                         });
                     }else {

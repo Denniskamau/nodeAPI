@@ -8,16 +8,20 @@ module.exports = {
     addWebsite(req,res) {
         // check if user is authenticated
         const auth  = req.headers['authorization']
+        console.log('auth is ', auth)
         if(auth){
             // check if the required data has been passed
 
             // get the session token
+            
             const tmp = auth.split(' ')
+            
             const token = tmp[1].slice(0, -1)
+            
             // decode the userid from the token
             const decode = jwt.verify(token,config.secret)
             const UserID = decode.id 
-
+            
             // check if their is a record with the same info
             if(req.body.name === undefined){
                 res.status(400).send({

@@ -3,8 +3,16 @@ let chaiHttp = require('chai-http');
 let app = require('../app');
 let should = chai.should();
 let truncate = require('./truncate');
-
+let createUser = require('./createUser')
 chai.use(chaiHttp);
+
+
+
+
+before(()=>{
+    truncate();
+})
+createUser();
 
 
 describe('/GET', ()=>{
@@ -88,9 +96,9 @@ describe('/GET data', ()=>{
 
 describe('/POST /user/signup', ()=>{
 
-     beforeEach(() => {
-        truncate();
-     });
+    //  beforeEach(() => {
+    //     truncate();
+    //  });
 
     it('it should return session token when user is registerd',(done)=>{
        
@@ -105,8 +113,9 @@ describe('/POST /user/signup', ()=>{
            
            res.should.have.status(200);
            res.body.should.have.property('session')
+           done();
        });
-       done();
+       
     }),
         it('it should return error when user with the same email exist', (done) => {
 
@@ -120,10 +129,10 @@ describe('/POST /user/signup', ()=>{
                 .end((err, res) => {
                     
                     res.should.have.status(400);
-                    res.body.should.have.property('session')
-
+                    res.body.should.have.property('error')
+                    done();
                 });
-            done();
+           
         })
 });
 
@@ -138,6 +147,8 @@ describe('/POST /user/login', ()=>{
         .post('/user/login')
         .send(user)
         .end((err,res)=>{
+            console.log('login status ', res.status)
+            console.log('login body', res.body)
             res.should.have.status(200);
             res.body.should.have.property('session')
             
@@ -154,69 +165,14 @@ describe('/POST /user/login', ()=>{
         .post('/user/login')
         .send(user)
         .end((err,res)=>{
-            console.log('login status', res.status)
-            console.log('login body', res.body)
             res.should.have.status(400);
             res.body.should.have.property('error')
-            
+            done();
         });
-        done();
+        
     })
 
 })
-
-
-
-// Test /websites/list
-// describe('/website/list',()=>{
-//     it('should return an object with the values of websites in the database', (done)=>{
-//         chai.request(app)
-//         .get('/website/list')
-//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-//         .end((err,res)=>{
-//             res.should.have.status(200)
-//             res.should.be.json;
-//         })
-//         done();
-//     }),
-
-//     it('should make sure that one is authenticated', (done)=>{
-//         chai.request(app)
-//         .get('/website/list')
-//         .end((err,res)=>{
-//             res.should.have.status(401)
-//             res.should.have.property('error')
-//         })
-//         done();
-//     })
-// })
-
-
-
-
-
-
-// describe(' /POST /website/add check that all parameters are there', ()=>{
-//     it('should return 200 and the data object when correct parameters are given', (done)=>{
-//         let website = {
-//             name:'testing',
-//             url:'www.testing.com'
-//         }
-//         chai.request(app)
-//         .post('/website/add')
-//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
-//         .send(website)
-//         .end((err,res)=>{
-//             res.should.have.status(200)
-//             res.should.be.json;
-//             res.body.should.have.property('status')
-            
-//         })
-//         done();
-//     })
-
-// });
-
 
 describe('/POST /website/add make sure the user is authorised',()=>{
     it('should return 401 when Authorization headers are not present',(done)=>{
@@ -237,6 +193,12 @@ describe('/POST /website/add make sure the user is authorised',()=>{
     });
 
 });
+
+
+
+
+
+
 
 
     
@@ -314,3 +276,29 @@ describe('/POST /website/add make sure the user is authorised',()=>{
 //         done();
 //     })
 // })
+
+
+// Test /websites/list
+// describe('/website/list',()=>{
+//     it('should return an object with the values of websites in the database', (done)=>{
+//         chai.request(app)
+//         .get('/website/list')
+//         .set('authorization',"'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjEsImlhdCI6MTUzNzcyMjYzN30.eUgrbDZRxQMADN3LgQZByfy9FVV8onrbUDclpYIkIjA'" )
+//         .end((err,res)=>{
+//             res.should.have.status(200)
+//             res.should.be.json;
+//         })
+//         done();
+//     }),
+
+//     it('should make sure that one is authenticated', (done)=>{
+//         chai.request(app)
+//         .get('/website/list')
+//         .end((err,res)=>{
+//             res.should.have.status(401)
+//             res.should.have.property('error')
+//         })
+//         done();
+//     })
+// })
+
