@@ -34,7 +34,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "setupDb": " NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test   nyc mocha --exit ./tests/test",
+    "test": "NODE_ENV=test   nyc mocha  ./tests/test --exit" ,
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
   }
