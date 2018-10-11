@@ -204,4 +204,30 @@ module.exports = function createUser() {
 
 
     })
+
+
+    describe('list all sites', ()=>{
+        it('should return a list of all the websites',(done)=>{
+            let user = {
+                email:"test@gmail.com",
+                password:"test"
+            }
+            
+            chai.request(app)
+            .post('/user/login')
+            .send(user)
+            .end((err,res)=>{
+                console.log('response', res.body.session)
+                //res.should.have.status(200) 
+                chai.request(app)
+                .get('/website/list')
+                .set({'authorization':'Bearer '+res.body.session + '/'})
+                .end((err,res)=>{
+                    res.should.have.status(200)
+                    done();
+                }) 
+            
+            })
+        })
+    })
 }
