@@ -7,6 +7,7 @@
     "body-parser": "~1.0.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "check-valid-url": "0.0.2",
     "codecov": "^3.0.4",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
@@ -27,12 +28,13 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.38.0",
-    "sequelize-mock": "^0.10.2"
+    "sequelize-mock": "^0.10.2",
+    "valid-url": "^1.0.9"
   },
   "scripts": {
     "start": "node ./bin/www",
     "setupDb": " NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test   nyc mocha ./tests/test",
+    "test": "NODE_ENV=test   nyc mocha  ./tests/test --exit" ,
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
   }

@@ -1,3 +1,3 @@
-const singUp = require('./signup')
+const Website = require('./website')
 
-module.exports = {singUp}
+module.exports = {Website}

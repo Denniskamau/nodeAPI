@@ -48,8 +48,6 @@ app.get('/', (req, res) => res.status(200).send({
 
 var data;
 app.post('/data', (req, res) => {
-    console.log(JSON.stringify(typeof req.body.data))
-    console.log('lenght is', req.body.data.length)
     if(typeof req.body.data=== "string"){
         if(req.body.data.length == 0){
             res.status(400).send({
@@ -68,7 +66,6 @@ app.post('/data', (req, res) => {
 })
 
 app.get('/data', (req, res) => {
-    console.log('data', typeof data)
     if(typeof data == "object"){
         res.status(200).send(data)
     }else{
