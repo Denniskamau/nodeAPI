@@ -21,20 +21,22 @@
     "mocha": "^5.2.0",
     "mongoose": "~3.6.13",
     "morgan": "^1.9.0",
+    "node-cron": "^2.0.3",
     "nodemon": "^1.18.3",
     "nyc": "^13.0.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
+    "request": "^2.88.0",
     "sequelize": "^4.38.0",
     "sequelize-mock": "^0.10.2",
     "valid-url": "^1.0.9"
   },
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "setupDb": " NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test   nyc mocha  ./tests/test --exit" ,
+    "test": "NODE_ENV=test   nyc mocha  ./tests/test --exit",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
   }

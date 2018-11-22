@@ -7,7 +7,7 @@ const flash = require('connect-flash')
 const cookieParser = require('cookie-parser');
 const config = require('./server/config/config')
 const cors = require('cors');
-
+const uptime = require('./workers/uptime')
 const app = express()
 
 const routes = {
@@ -18,6 +18,7 @@ const routes = {
 const models = require('./server/models')
 require('./server/config/passport')(passport,models.user);
 
+uptime.checkWebsiteUptime();
 //BodyParser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -80,4 +81,7 @@ app.use('/user/', routes.singup);
 
 //website route
 app.use('/website/', routes.website);
+
+// Load the uptime module
+
 module.exports = app
