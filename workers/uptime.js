@@ -20,8 +20,8 @@ module.exports = {
   
                     website.forEach(element => {
                        // console.log('element', JSON.stringify(element))
-                        request('http://'+element.URL, (err,res,body)=>{
-                            console.log('error', err)
+                        request('http://'+element.URL, (err,res)=>{
+                            
                             if(err != null){
                                 element.Status = 'Offline'
                                 
