@@ -29,12 +29,13 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.38.0",
     "sequelize-mock": "^0.10.2",
+    "twilio": "^3.24.0",
     "valid-url": "^1.0.9"
   },
   "scripts": {
     "start": "node ./bin/www",
     "setupDb": " NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test   nyc mocha  ./tests/test --exit" ,
+    "test": "NODE_ENV=test   nyc mocha  ./tests/test --exit",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "showcoverage": "open ./tests/coverage/lcov-report/index.html"
   }
