@@ -1,7 +1,7 @@
 const cron = require('node-cron')
 const request = require('request')
 const Websites = require('../server/models').Websites
-
+const notification = require('../server/services/twilio/sms')
 const updateDatabase = require('./updateDb')
 
 // schedule job with cron-job
@@ -24,19 +24,23 @@ module.exports = {
                             
                             if(err != null){
                                 element.Status = 'Offline'
+                                notification.sendOfflineNotification('+254700184646')
                                 
                             }
                             else if (err == null){
                                 if(res.statusCode != 200){
                                     element.Status = 'Offline'
+                                    notification.sendOfflineNotification('+254700184646')
                                    
                                 }
  
                             }else if (res.statusCode != 200){
                                 element.Status = 'Offline'
+                                notification.sendOfflineNotification('+254700184646')
                               
                             }else{
                                 element.Status = 'Online'
+                                notification.sendOnlineNotification('+254700184646')
                                
                             }
                             // call update function to update the record in the database
