@@ -88,6 +88,7 @@ module.exports = {
 
     },
     listWebsite(req,res) {
+        console.log('hit add websti')
         const auth = req.headers['authorization']; 
         if(auth) {     // No Authorization header was passed in so it's the first time the browser hit us
         Websites.findAll({

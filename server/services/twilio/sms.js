@@ -24,7 +24,7 @@ module.exports = {
         .create({
             body: `server monitoring application.This is to notify you that your server ${website} is back online.`,
             from:'+17194964643',
-            to:phoneNumber
+            to: `${phoneNumber}`
         })
         .then(message => console.log('message sid', message.sid))
         .done()

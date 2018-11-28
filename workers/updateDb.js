@@ -1,10 +1,10 @@
 const Websites = require('../server/models').Websites
 
 module.exports = {
-    updateDb(websiteName,element){
+    updateDb(websiteName,Status){
         
         Websites.update(
-            {Status: element.Status},
+            {Status: Status},
             {where: {Name:websiteName}}
             ).then(()=>{
                 console.log('record updated')
