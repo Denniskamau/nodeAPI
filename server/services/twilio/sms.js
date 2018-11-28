@@ -1,16 +1,17 @@
-//const config = require('../../config/config')
-
+const config = require('../../config/config')
+require('dotenv').load();
 const client = require('twilio')(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
+    config.TWILIO_ACCOUNT_SID,
+    config.TWILIO_AUTH_TOKEN
 )
 
 
 module.exports = {
-    sendOfflineNotification(phoneNumber){
+    sendOfflineNotification(phoneNumber,website){
+        console.log('called offline')
         client.messages
         .create({
-            body:'server monitoring application.This is to notify you that your server is offline.',
+            body:`server monitoring application.This is to notify you that your server ${website} is offline.`,
             from:'+17194964643',
             to:phoneNumber
         })
@@ -18,10 +19,10 @@ module.exports = {
         .done()
     },
 
-    sendOnlineNotification(phoneNumber){
+    sendOnlineNotification(phoneNumber,website){
         client.messages
         .create({
-            body:'server monitoring application.This is to notify you that your server is back online.',
+            body: `server monitoring application.This is to notify you that your server ${website} is back online.`,
             from:'+17194964643',
             to:phoneNumber
         })

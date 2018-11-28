@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    phoneNo: {
+      type: DataTypes.INTEGER,
     }
   }, {});
   User.associate = (models) => {
