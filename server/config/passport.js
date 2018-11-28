@@ -32,7 +32,7 @@ module.exports = (passport, user)=> {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         (req, email, password, done)=> {
-            console.log('request body', req.body)
+           
             // asynchronous
             // User.findOne wont fire unless data is sent back
 
