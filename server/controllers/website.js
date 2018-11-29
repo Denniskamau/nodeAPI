@@ -17,11 +17,11 @@ module.exports = {
             const tmp = auth.split(' ')
             
             const token = tmp[1].slice(0, -1)
-            
+            console.log('session ', token)
             // decode the userid from the token
             const decode = jwt.verify(token,config.secret)
             const UserID = decode.id 
-            
+            console.log('user',UserID)
             // check if their is a record with the same info
             if(req.body.name === undefined){
                 res.status(400).send({
@@ -88,13 +88,14 @@ module.exports = {
 
     },
     listWebsite(req,res) {
+        console.log('hit add websti')
         const auth = req.headers['authorization']; 
         if(auth) {     // No Authorization header was passed in so it's the first time the browser hit us
         Websites.findAll({
             attributes: ['Name','URL','Status','UserId']
         
         }).then(website => {
-            res.status(200).send(website)
+            res.status(200).json(website)
         })
         }else {
             res.statusCode = 401;

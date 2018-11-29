@@ -28,10 +28,11 @@ module.exports = (passport, user)=> {
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
             passwordField: 'password',
+            //phoneNo: 'phoneNo',
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         (req, email, password, done)=> {
-
+           
             // asynchronous
             // User.findOne wont fire unless data is sent back
 
@@ -60,7 +61,8 @@ module.exports = (passport, user)=> {
                         const data =
                         {
                             email:email,
-                            password:userPassword
+                            password:userPassword,
+                            phoneNo:req.body.phoneNo
                         }
                         User.create(data).then((newUser,created)=>{
                             if(!newUser){

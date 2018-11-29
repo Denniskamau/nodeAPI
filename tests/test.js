@@ -4,6 +4,7 @@ let app = require('../app');
 let should = chai.should();
 let truncate = require('./truncate');
 let createUser = require('./createUser')
+let workersTest = require('./workersTest')
 chai.use(chaiHttp);
 
 
@@ -16,6 +17,8 @@ before(()=>{
 // Test /website
 createUser();
 
+//Test workers
+workersTest();
 
 describe('/GET', ()=>{
     it('is should get the index', (done)=>{
@@ -106,7 +109,8 @@ describe('/POST /user/signup', ()=>{
        
        let user = {
            email: "hackerbay@sample.com",
-           password: "SamplePassword"
+           password: "SamplePassword",
+           phoneNo: "0700184646"
        }
         chai.request(app)
        .post('/user/signup')
@@ -123,7 +127,8 @@ describe('/POST /user/signup', ()=>{
 
             let user = {
                 email: "hackerbay@sample.com",
-                password: "SamplePassword"
+                password: "SamplePassword",
+                phoneNo:"0700184646"
             }
             chai.request(app)
                 .post('/user/signup')

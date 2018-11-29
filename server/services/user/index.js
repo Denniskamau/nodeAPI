@@ -12,8 +12,9 @@ router.post('/signup', (req,res)=>{
             if(user.error){
                 res.status(400).json(user)
             }
+            
             const token = jwt.sign({id:user.id}, config.secret);
-            res.json({session:token})
+            res.json({session:token,userEmail:user.dataValues.email})
         }
     })(req,res);
 })
@@ -24,9 +25,11 @@ router.post('/login', (req, res) => {
             if (user.error){
                 res.status(400).json(user)
             }
+            
             const token = jwt.sign({id:user.id}, config.secret);
             //res.status(200);
-            res.json({session:token})
+            
+            res.json({session:token,userEmail:user.dataValues.email})
             
 
         }
