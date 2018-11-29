@@ -21,62 +21,69 @@ module.exports = {
                     // if it is not 200 then change the status from online to offline
   
                     website.forEach(element => {
-                       console.log('element', JSON.stringify(element))
-                        var phoneNumber
-                       
+                        this.getUserPhoneNumber(element)
                         
-                        //For each user get their phone Number from the database
-                        User.findById(element.UserId).then((user)=>{
-                            if(user){
-                             
-                               if (user.phoneNo != null){
-                                   phoneNumber = `+${254}${user.phoneNo}`
-                               }
-                               else {
-                                   phoneNumber = `+${254700184646}`
-                               }
-                                 
-                            } 
-                        })
-                        
-                        //Check the server status
-                        request('http://'+element.URL, (err,res)=>{
-                            
-                            if (res != undefined){
-                                if(element.Status === 'Online' && res.statusCode != 200){
-                                    //Send email that server is offline
-                                    element.Status = 'Offline'
-                                    
-                                    // call update function to update the record in the database
-                                    updateDatabase.updateDb(element.Name, element.Status)
-                                    //send sms notification
-                                    notification.sendOfflineNotification(phoneNumber,element.URL)
-                                }else if (element.Status === 'Offline' && res.statusCode == 200){
-                                    //send email that server is online
-                                    element.Status = 'Online'
-                                   
-                                    // call update function to update the record in the database
-                                    updateDatabase.updateDb(element.Name, element.Status)
-                                    //send sms notification
-                                    notification.sendOnlineNotification(phoneNumber,element.URL)
-                                }
-                            }
-                            else if(element.Status === 'Online' && err != null){
-                                //send email that server is offline
-                                element.Status = 'Offline'
-                               
-                                // call update function to update the record in the database
-                                updateDatabase.updateDb(element.Name, element.Status)
-                                // send sms notification
-                                notification.sendOfflineNotification(phoneNumber,element.URL)
-                               
-                            }
-                           
-                        })
                     });
                 }
                
             })
         })
+    },
+    getUserPhoneNumber(element){
+        User.findById(element.UserId).then((user)=>{
+            var phoneNumber
+            if(user){
+             
+               if (user.phoneNo != null){
+                    phoneNumber = `+${254}${user.phoneNo}`
+                  
+                   this.checkServerStatus(element, phoneNumber)
+               }
+               else {
+                    phoneNumber = `+${254700184646}`
+                  
+                   this.checkServerStatus(element.URL, phoneNumber)
+               }
+                 
+            } 
+        })
+
+    },
+
+    checkServerStatus(element,phoneNumber){
+        request('http://'+element.URL, (err,res)=>{
+                            
+            if (res != undefined){
+                if(element.Status === 'Online' && res.statusCode != 200){
+                    //Send email that server is offline
+                    element.Status = 'Offline'
+                    
+                    // call update function to update the record in the database
+                    updateDatabase.updateDb(element.Name, element.Status)
+                    //send sms notification
+                    notification.sendOfflineNotification(phoneNumber,element.URL)
+                }else if (element.Status === 'Offline' && res.statusCode == 200){
+                    //send email that server is online
+                    element.Status = 'Online'
+                   
+                    // call update function to update the record in the database
+                    updateDatabase.updateDb(element.Name, element.Status)
+                    //send sms notification
+                    notification.sendOnlineNotification(phoneNumber,element.URL)
+                }
+            }
+            else if(element.Status === 'Online' && err != null){
+                //send email that server is offline
+                element.Status = 'Offline'
+               
+                // call update function to update the record in the database
+                updateDatabase.updateDb(element.Name, element.Status)
+                // send sms notification
+                notification.sendOfflineNotification(phoneNumber,element.URL)
+               
+            }
+           
+        })
+
     }
 }
