@@ -109,7 +109,8 @@ describe('/POST /user/signup', ()=>{
        
        let user = {
            email: "hackerbay@sample.com",
-           password: "SamplePassword"
+           password: "SamplePassword",
+           phoneNo: "0700184646"
        }
         chai.request(app)
        .post('/user/signup')
@@ -126,7 +127,8 @@ describe('/POST /user/signup', ()=>{
 
             let user = {
                 email: "hackerbay@sample.com",
-                password: "SamplePassword"
+                password: "SamplePassword",
+                phoneNo:"0700184646"
             }
             chai.request(app)
                 .post('/user/signup')

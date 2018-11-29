@@ -30,6 +30,7 @@ module.exports = {
         })
     },
     getUserPhoneNumber(element){
+        console.log('element', JSON.stringify(element))
         User.findById(element.UserId).then((user)=>{
             var phoneNumber
             if(user){
