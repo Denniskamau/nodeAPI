@@ -1,0 +1,21 @@
+version : '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5000:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: serverMonitor
+
+  web:
+    container_name: web
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres@postgres:5432/serverMonitor

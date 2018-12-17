@@ -1,20 +1,17 @@
 FROM node:8
 
-RUN mkdir /src
-WORKDIR /src
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY package.json /src
+COPY package.json  /usr/src/app
 RUN npm install
 
-COPY ./server /src/server
-COPY ./workers /src/workers
-COPY ./bin /src/bin
-COPY ./tests /src/tests
-
+COPY . /usr/src/app
+#ADD ./.sequelizerc /usr/src/app/.sequelizerc
 
 ENV NODE_ENV development
 
-EXPOSE 8081
+EXPOSE 3000
 
-CMD [ "node", "./bin/www" ]
+CMD [ "npm", "start" ]
 
